@@ -27,7 +27,7 @@ public class CuentaDTO {
 		tercero = c.isTerceros();
 		centroCostos = c.isCcostos();
 		movimientos = c.isMovimientos();
-		codCuentaS = c.getCuentaSuperior().getCodCuenta();
+		codCuentaS = c.getCuentaSuperior();
 
 	}
 

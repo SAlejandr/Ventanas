@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -294,9 +295,9 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 				FuncionesVentanas.marcarErrorFloat(elDebito);
 				FuncionesVentanas.marcarErrorFloat(laBase);
 
-				m.setCredito(Float.parseFloat(elCredito.getText()));
-				m.setDebito(Float.parseFloat(elDebito.getText()));
-				m.setBase(Float.parseFloat(laBase.getText()));
+				m.setCredito( new BigDecimal(elCredito.getText()));
+				m.setDebito(new BigDecimal(elDebito.getText()));
+				m.setBase(new BigDecimal(laBase.getText()));
 
 				correcto = true;
 			}catch (NumberFormatException e) {
@@ -402,20 +403,20 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 	public boolean advertir() {
 
-		return (sacarTotal()==0)?true:false;
+		return (sacarTotal().compareTo(new BigDecimal(0)) != 0 ? true : false);
 	}
 
-	public float sacarTotal() {
+	public BigDecimal sacarTotal() {
 
-		float total = 0;
+		BigDecimal total = new BigDecimal(0);;
 
 		Iterator<Movimiento> iterator = movimientos.iterator();
 
 		while (iterator.hasNext()) {
 			Movimiento movimiento = iterator.next();
 
-			total += movimiento.getDebito();
-			total -= movimiento.getCredito();
+			total.add(movimiento.getDebito());
+			total.subtract(movimiento.getCredito());
 
 		}
 

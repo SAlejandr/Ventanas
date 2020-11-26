@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,9 +21,9 @@ public class MovimientoDTO {
 	private int ccostos;
 	private String tercero;
 	private String cuenta;
-	private float base;
-	private float credito;
-	private float debito;
+	private BigDecimal base;
+	private BigDecimal credito;
+	private BigDecimal debito;
 	private String estado;
 	
 	

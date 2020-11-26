@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.example.demo.model.pojos.Documento;
@@ -23,7 +24,7 @@ public class DocumentoDTO {
 
 	private LocalDate fecha;
 
-	private float valorTotal;
+	private BigDecimal valorTotal;
 
 	private String concepto;
 	

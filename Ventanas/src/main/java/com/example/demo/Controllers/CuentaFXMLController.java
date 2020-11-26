@@ -33,14 +33,14 @@ public class CuentaFXMLController implements Initializable{
 	@FXML TableView<CuentaDTO> tabla;
 
 	@FXML TextField new_codCuenta;
-	@FXML ComboBox new_cuentaS;
+	@FXML ComboBox<String> new_cuentaS;
 	@FXML CheckBox new_hasTercero;
 	@FXML CheckBox new_hasCCostos;
 	@FXML CheckBox new_hasMovimientos;
 	@FXML TextField new_nombre;
 	@FXML ComboBox<ConfiguracionCuentas> new_config;
 
-	@FXML ComboBox upd_cuentaS;
+	@FXML ComboBox<String> upd_cuentaS;
 	@FXML TextField upd_codCuenta;
 	@FXML CheckBox upd_hasTercero;
 	@FXML CheckBox upd_hasCCostos;
@@ -89,7 +89,8 @@ public class CuentaFXMLController implements Initializable{
 		tabla.setItems(cuentasDTO);
 
 		new_config.setItems(configuraciones);
-		new_cuentaS.setItems(codCuentas); 
+		new_cuentaS.setItems(codCuentas);
+		upd_cuentaS.setItems(codCuentas);
 
 	}
 
@@ -126,7 +127,7 @@ public class CuentaFXMLController implements Initializable{
 
 			Cuenta c = Cuenta.builder().
 					codCuenta(codCuenta).
-					cuentaSuperior(cuentas.get(new_cuentaS.getSelectionModel().getSelectedItem())).
+					cuentaSuperior(new_cuentaS.getValue()).
 					nombre(new_nombre.getText()).
 					claseCuenta(new_config.getSelectionModel().getSelectedItem()).
 					ccostos(new_hasCCostos.isSelected()).
@@ -158,7 +159,7 @@ public class CuentaFXMLController implements Initializable{
 
 			Cuenta c = Cuenta.builder().
 					codCuenta(codCuenta).
-					cuentaSuperior(cuentas.get(upd_cuentaS.getSelectionModel().getSelectedItem())).
+					cuentaSuperior(upd_cuentaS.getSelectionModel().getSelectedItem()).
 					nombre(upd_nombre.getText()).
 					claseCuenta(upd_config.getSelectionModel().getSelectedItem()).
 					ccostos(upd_hasCCostos.isSelected()).
