@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.CopiaSeguridadFXMLController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea fx:id="mensajeArea" editable="false" layoutX="42.0" layoutY="27.0" prefHeight="200.0" prefWidth="555.0" text="El proceso de copia de seguridad crea un archivo identficado como&#10;copia_conta_AAAAMMDDHHMM.dump  el  cual  se   ubicará  en  la &#10;carpeta  c:\copias.   Por  precaución   deben  ser   llevadas  o  medio &#10;seguro  para  evitar  su  pérdida  en  caso  de  fallo  en  el  medio de &#10;almacenamiento.&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+            <Button fx:id="generarBoton" layoutX="237.0" layoutY="261.0" mnemonicParsing="false" onAction="#onGenerarClicked" text="Generar Copia de Seguridad" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

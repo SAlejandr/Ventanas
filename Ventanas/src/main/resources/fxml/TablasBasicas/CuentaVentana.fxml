@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.CuentaFXMLController">
+   <children>
+      <TabPane prefHeight="362.0" prefWidth="523.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Ver datos">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="147.0" layoutY="14.0" mnemonicParsing="false" onAction="#borrar" text="Borrar" />
+                        <Button layoutX="26.0" layoutY="14.0" mnemonicParsing="false" onAction="#refrescarLista" text="Refrescar" />
+                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="37.0" layoutY="48.0" prefHeight="250.0" prefWidth="434.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="52.0">
+                           <content>
+                              <TableView fx:id="tabla" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Crear">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="14.0" layoutY="14.0" prefHeight="303.0" prefWidth="501.0">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="new_codCuenta" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="new_cuentaS" onAction="#autocompletar" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <CheckBox fx:id="new_hasTercero" mnemonicParsing="false" text="Terceros" GridPane.rowIndex="5" />
+                              <CheckBox fx:id="new_hasCCostos" mnemonicParsing="false" text="Centros de costos" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <CheckBox fx:id="new_hasMovimientos" mnemonicParsing="false" text="Movimientos" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <Label text="Cuenta padre" />
+                              <Label text="Cod. Cuenta" GridPane.rowIndex="1" />
+                              <Label text="Nombre" GridPane.rowIndex="2" />
+                              <TextField fx:id="new_nombre" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Acepta:" GridPane.rowIndex="4" />
+                              <Button mnemonicParsing="false" onAction="#crear" text="Guardar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                              <Label text="Configuracion Cuenta" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="new_config" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Actualizar">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="11.0" layoutY="13.0" prefHeight="303.0" prefWidth="501.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <TextField fx:id="upd_codCuenta" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="upd_cuentaS" onKeyTyped="#remplazar" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <CheckBox fx:id="upd_hasTercero" mnemonicParsing="false" text="Terceros" GridPane.rowIndex="5" />
+                              <CheckBox fx:id="upd_hasCCostos" mnemonicParsing="false" text="Centros de costos" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <CheckBox fx:id="upd_hasMovimientos" mnemonicParsing="false" text="Movimientos" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <Label text="Cuenta padre" />
+                              <Label text="Cod. Cuenta" GridPane.rowIndex="1" />
+                              <Label text="Nombre" GridPane.rowIndex="2" />
+                              <TextField fx:id="upd_nombre" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Acepta:" GridPane.rowIndex="4" />
+                              <Button mnemonicParsing="false" onAction="#actualizar" text="Guardar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                              <Button mnemonicParsing="false" onAction="#buscar" text="Cargar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Label text="Configuracion Cuenta" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="upd_config" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>

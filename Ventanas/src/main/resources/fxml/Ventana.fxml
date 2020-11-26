@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.FXMLController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+            <Menu mnemonicParsing="false" text="Archivo">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#CompaniaVentana" text="Datos Compañía" />
+                <MenuItem mnemonicParsing="false" onAction="#activarAnnoVentana" text="Activar año" />
+                  <MenuItem mnemonicParsing="false" onAction="#activarMesVentana" text="Activar mes" />
+                  <MenuItem mnemonicParsing="false" text="Cerrar sesion" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Salir" />
+              </items>
+            </Menu>
+			<Menu mnemonicParsing="false" text="Procesos básicos">
+			  <items>
+                  <Menu mnemonicParsing="false" text="Tablas básicas">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#annoVentana" text="Año" />
+                        <MenuItem mnemonicParsing="false" onAction="#centroDeCosVentana" text="Centro de Costos" />
+                        <MenuItem mnemonicParsing="false" onAction="#ciudadesVentana" text="Ciudades" />
+                        <MenuItem mnemonicParsing="false" onAction="#cuentasVentana" text="Configuracion cuentas" />
+                        <MenuItem mnemonicParsing="false" onAction="#cuentasVentana" text="Cuenta" />
+                        <MenuItem mnemonicParsing="false" onAction="#departamentoVentana" text="Departamento" />
+                        <MenuItem mnemonicParsing="false" onAction="#documentoVentana" text="Documento" />
+                        <MenuItem mnemonicParsing="false" onAction="#mesVentana" text="Mes" />
+                        <MenuItem mnemonicParsing="false" onAction="#responsableVentana" text="Responsable" />
+                        <MenuItem mnemonicParsing="false" onAction="#terceroVentana" text="Tercero" />
+                        <MenuItem mnemonicParsing="false" onAction="#tipoDocumentoVentana" text="TipoDocumento" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Tablas especiales">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Saldos cuentas" />
+                        <MenuItem mnemonicParsing="false" text="Saldos terceros" />
+                        <MenuItem mnemonicParsing="false" text="Saldos centros de costos" />
+                        <MenuItem mnemonicParsing="false" text="Saldos inicales Cuentas" />
+                        <MenuItem mnemonicParsing="false" text="Saldos inicales C.Costos" />
+                        <MenuItem mnemonicParsing="false" text="Saldos iniciales Terceros" />
+                        <MenuItem mnemonicParsing="false" text="Sucesos" />
+                    </items>
+                  </Menu>
+                  <MenuItem onAction="#capturarMovimientos" mnemonicParsing="false" text="Capturar movimiento" />
+                  <Menu mnemonicParsing="false" text="Libros auxiliares">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Por cuenta" />
+                        <MenuItem mnemonicParsing="false" text="Por cuenta y tercero" />
+                        <MenuItem mnemonicParsing="false" text="Por tercero y cuenta" />
+                        <MenuItem mnemonicParsing="false" text="Por cuenta y C.Costos" />
+                        <MenuItem mnemonicParsing="false" text="Por C.Costos y cuenta" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Libros oficiales">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Libro mayor y balance" />
+                        <MenuItem mnemonicParsing="false" text="Libro inventarioy balance" />
+                        <MenuItem mnemonicParsing="false" text="Libro diario" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Reportes adicionales">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Balance de prueba" />
+                        <MenuItem mnemonicParsing="false" text="Balance general" />
+                        <MenuItem mnemonicParsing="false" text="Estado de resultados" />
+                    </items>
+                  </Menu>
+			  </items>
+			</Menu>
+        <Menu mnemonicParsing="false" text="Procesos Especiales">
+          <items>
+                  <Menu mnemonicParsing="false" text="Procesos de auditoria">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Cuentas no afectables" />
+                        <MenuItem mnemonicParsing="false" text="Movimientos sin valor" />
+                        <MenuItem mnemonicParsing="false" text="Documentos sin movimientos" />
+                        <MenuItem mnemonicParsing="false" text="Debitos = Creditos" />
+                        <MenuItem mnemonicParsing="false" text="Movimientos con terceros" />
+                        <MenuItem mnemonicParsing="false" text="Movimientos con C.Costos" />
+                        <MenuItem mnemonicParsing="false" text="Auditoria Total" />
+                    </items>
+                  </Menu>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Remayorización" />
+            <MenuItem mnemonicParsing="false" onAction="#CopiaSeguridadVentana" text="Copia de seguridad" />
+            <MenuItem mnemonicParsing="false" onAction="#RestaurarCopiaVentana" text="Resturar Copia" />
+            <MenuItem mnemonicParsing="false" text="Cierre de cuentas nominales" />
+            <MenuItem mnemonicParsing="false" text="Cierre de cuentas reales" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Administración">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Usuarios" />
+                  <MenuItem mnemonicParsing="false" text="Permisos de usuarios" />
+                  <MenuItem mnemonicParsing="false" text="Cambiar contraseña" />
+                  <MenuItem mnemonicParsing="false" onAction="#LogAccesoVentana" text="Logs de acceso" />
+                  <MenuItem mnemonicParsing="false" onAction="#LogSucesosVentana" text="Logs de sucesos" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+  </children>
+</VBox>

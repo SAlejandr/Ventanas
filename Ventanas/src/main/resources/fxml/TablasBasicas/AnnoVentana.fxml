@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="399.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.AnnoFXMLController">
+	<children>
+		<TabPane prefHeight="404.0" prefWidth="590.0" tabClosingPolicy="UNAVAILABLE">
+			<tabs>
+				<Tab text="Ver Datos">
+               <content>
+                  <AnchorPane prefHeight="285.0" prefWidth="590.0">
+                     <children>
+                              <TableView fx:id="tablaAnno" layoutX="14.0" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="349.0" />
+                        <Button layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onAction="#refrescarLista" text="Refrescar" />
+                        <Button layoutX="125.0" layoutY="14.0" mnemonicParsing="false" onAction="#borrarAnno" text="Borrar" />
+                     </children>
+                  </AnchorPane>
+               </content>
+				</Tab>
+				<Tab  text="Crear nuevo">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="286.0" prefWidth="590.0">
+							<children>
+								<Button layoutX="40.0" layoutY="220.0" mnemonicParsing="false" onAction="#generarAnno" text="Guardar" />
+								<TextField fx:id="new_id_anno" layoutX="155.0" layoutY="34.0" />
+								<Label layoutX="55.0" layoutY="38.0" text="Año:" />
+								<Label layoutX="26.0" layoutY="98.0" text="Fecha de Inicio:" />
+								<Label layoutX="26.0" layoutY="146.0" text="Fecha de cierre:" />
+                        <CheckBox fx:id="cerradoNew" layoutX="155.0" layoutY="188.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="102.0" text="Cerrado" />
+                        <DatePicker fx:id="new_f_init" layoutX="147.0" layoutY="93.0" />
+                        <DatePicker fx:id="new_f_end" layoutX="147.0" layoutY="141.0" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+				<Tab text="Actualizar">
+					<content>
+						<AnchorPane fx:id="idCerradoUpd" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="215.0">
+							<children>
+								<Button layoutX="42.0" layoutY="229.0" mnemonicParsing="false" onAction="#modificarAnno" text="Guardar" />
+								<TextField fx:id="upd_id_anno" layoutX="155.0" layoutY="34.0" />
+								<Label layoutX="55.0" layoutY="38.0" text="Año:" />
+								<Label layoutX="26.0" layoutY="98.0" text="Fecha de Inicio:" />
+								<Label layoutX="26.0" layoutY="146.0" text="Fecha de cierre:" />
+                        <CheckBox fx:id="cerradoUpd" layoutX="155.0" layoutY="191.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="102.0" text="Cerrado" />
+                        <DatePicker fx:id="upd_f_init" layoutX="147.0" layoutY="93.0" />
+                        <DatePicker fx:id="upd_f_end" layoutX="147.0" layoutY="141.0" />
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</children>
+</VBox>

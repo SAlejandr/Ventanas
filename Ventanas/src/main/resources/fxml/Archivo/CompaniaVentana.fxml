@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.CompaniaFXMLController">
+   <children>
+      <VBox layoutX="22.0" layoutY="15.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="ID" />
+                  <TextField fx:id="idText" />
+                  <Separator prefHeight="1.0" prefWidth="66.0" visible="false" />
+                  <Label prefHeight="17.0" prefWidth="42.0" text="Tipo Id" />
+                  <TextField fx:id="tipoIdText" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Nombre" />
+                  <TextField fx:id="nombreText" prefHeight="25.0" prefWidth="407.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Dirección" />
+                  <TextField fx:id="direccionText" prefHeight="25.0" prefWidth="407.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Ciudad" />
+                  <TextField fx:id="ciudadText" prefHeight="25.0" prefWidth="407.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Móvil" />
+                  <TextField fx:id="movilText" />
+                  <Separator prefHeight="0.0" prefWidth="67.0" visible="false" />
+                  <Label prefHeight="17.0" prefWidth="44.0" text="Fijo" />
+                  <TextField fx:id="fijoText" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Representante Legal" />
+                  <TextField fx:id="repLegalText" prefHeight="25.0" prefWidth="407.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Revisor Fiscal" />
+                  <TextField fx:id="revisorFiscalText" prefHeight="25.0" prefWidth="407.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Contador Público" />
+                  <TextField fx:id="contadorPublicoText" prefHeight="25.0" prefWidth="407.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="110.0" text="Requiere Centros?" />
+                  <CheckBox fx:id="requiereCentrosCheck" mnemonicParsing="false" />
+               </children>
+            </HBox>
+            <HBox prefHeight="35.0" prefWidth="532.0">
+               <children>
+                  <Separator prefHeight="0.0" prefWidth="264.0" visible="false" />
+                  <Button fx:id="guardarBoton" mnemonicParsing="false" text="Guardar" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
