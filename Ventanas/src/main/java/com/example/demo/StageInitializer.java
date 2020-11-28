@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.VentanaPrincipal.StageReadyEvent;
 import com.example.demo.Controllers.ConfirmBox;
 import com.example.demo.Controllers.FXMLController;
-import com.example.demo.Controllers.LoginController;
+import com.example.demo.Controllers.LoginFXMLController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +57,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 			
 			acertar = false;
 			
-			LoginController login = loader.getController();
+			LoginFXMLController login = loader.getController();
 			
 			login.getLoginButton().setOnMouseClicked(e -> {
 				e.consume();
