@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.VentanaPrincipal.StageReadyEvent;
 import com.example.demo.Controllers.ConfirmBox;
 import com.example.demo.Controllers.FXMLController;
+import com.example.demo.Controllers.LoginController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -22,11 +23,15 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
 	@Value("classpath:/fxml/Ventana.fxml")
 	private Resource ventanaResource;
+	@Value("classpath:/fxml/Login.fxml")
+	private Resource loginResource;
 	
 	@Value("classpath:/templates/Estilos/ConfirmBoxStyle.css")
 	private Resource ccsConfirm;
 	
 	private Stage stage; 
+	private Scene scene1, scene2; 
+	private boolean acertar;
 
 	@Override
 	public void onApplicationEvent(StageReadyEvent event) {
@@ -34,16 +39,47 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 		Parent root;
 
 		FXMLLoader loader;
+		FXMLLoader loaderW;
 		try {
-			loader = new FXMLLoader(ventanaResource.getURL());
-			root = loader.load();
+			loader = new FXMLLoader(loginResource.getURL());
+			loaderW = new FXMLLoader(ventanaResource.getURL());
+			
 			stage = event.getStage();
+			
+			root = loader.load();
+			
+			stage.setTitle("Pantalla principal");
+			
+			scene1 = new Scene(root);
+			stage.setScene(scene1);
+			
+			
+			
+			acertar = false;
+			
+			LoginController login = loader.getController();
+			
+			login.getLoginButton().setOnMouseClicked(e -> {
+				e.consume();
+				acertar = login.logear();
+				if(acertar) {
+					try {
+						scene2 = new Scene(loaderW.load(), 1280, 800);
+						stage.setScene(scene2);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+					
+			});
 			
 			stage.setOnCloseRequest(e ->{
 				e.consume();
-				FXMLController f = loader.getController();
+				FXMLController f = loaderW.getController();
 				try {
-					f.cerrarTodas();
+					if(acertar)
+						f.cerrarTodas();
 					closeProgram();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -51,10 +87,6 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 				}
 			});
 			
-			stage.setTitle("Pantalla principal");
-			
-			Scene scene = new Scene(root,500,500);
-			stage.setScene(scene);
 			stage.show();
 
 		} catch (IOException e) {
@@ -66,6 +98,8 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
 	}
 
+	
+
 	private void closeProgram() throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -73,5 +107,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 		if(salir)
 			stage.close();
 	}
+	
+	
 
 }

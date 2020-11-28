@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.example.demo.Controllers.LoginController">
    <children>
       <TextField fx:id="username" GridPane.columnIndex="1" />
       <Label text="Usuario" />
       <PasswordField fx:id="passwd" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="Contraseña" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" fx:id="loginButton" onAction="#logear" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
    <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="30.0" />

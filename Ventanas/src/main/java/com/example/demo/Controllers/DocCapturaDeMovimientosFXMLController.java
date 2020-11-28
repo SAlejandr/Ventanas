@@ -195,7 +195,7 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 	@FXML private void refrescarLista() {
 		// TODO Auto-generated method 
 		//Aunque obtenga varios meses, solo cojo el primero y unico activo, a futuro se piensa poder usar mas de un mes activo
-		ResponseEntity<Mes[]> getMesesActivos = restTemplate.getForEntity(INIT_URL+"/mes/getAllActivos", Mes[].class);
+		ResponseEntity<Mes[]> getMesesActivos = restTemplate.getForEntity(INIT_URL+"/mes/getAllDeAnnoActivo", Mes[].class);
 		
 		Stream<Mes> consumer = Stream.of(getMesesActivos.getBody());
 		Mes mes = consumer.findFirst().get();
