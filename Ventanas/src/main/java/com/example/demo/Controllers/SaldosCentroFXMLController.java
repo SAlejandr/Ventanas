@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.dto.SaldoCCostosDTO;
 import com.example.demo.dto.SaldoCuentaDTO;
+import com.example.demo.model.pojos.SaldoCentroDeCostos;
 import com.example.demo.model.pojos.SaldoCuenta;
 import com.example.demo.model.pojos.Usuario;
 
@@ -30,11 +32,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 @Component
 public class SaldosCentroFXMLController implements Initializable{
 
-	@FXML private TableView<SaldoCuentaDTO> saldosCuentaTabla;
+	@FXML private TableView<SaldoCCostosDTO> saldosCuentaTabla;
 
-	private static ObservableList<SaldoCuentaDTO> losSaldosCuenta = FXCollections.observableArrayList();
+	private static ObservableList<SaldoCCostosDTO> losSaldosCuenta = FXCollections.observableArrayList();
 
-	private final String INIT_URL = "http://localhost:8080/pro/saldos/saldoCuenta";
+	private final String INIT_URL = "http://localhost:8080/pro/saldos/saldoCentros";
 
 	private RestTemplate restTemplate = new RestTemplate();
 
@@ -63,13 +65,13 @@ public class SaldosCentroFXMLController implements Initializable{
 			
 			//AQUI TENDRIA QUE CREAR UNA OBSERVABLE LIST CON SOLO DATOS SIMPLES
 			
-			TableColumn<SaldoCuentaDTO, String> columna1 = new TableColumn<>("Cuenta");
-			TableColumn<SaldoCuentaDTO, Integer> columna2 = new TableColumn<>("Año");
-			TableColumn<SaldoCuentaDTO, String> columna3 = new TableColumn<>("Mes");
-			TableColumn<SaldoCuentaDTO, BigDecimal> columna4 = new TableColumn<>("Mvto_Debito");
-			TableColumn<SaldoCuentaDTO, BigDecimal> columna5 = new TableColumn<>("Mvto_Credito");
-			TableColumn<SaldoCuentaDTO, BigDecimal> columna6 = new TableColumn<>("Total_Debito");
-			TableColumn<SaldoCuentaDTO, BigDecimal> columna7 = new TableColumn<>("Todal_Credito");
+			TableColumn<SaldoCCostosDTO, String> columna1 = new TableColumn<>("Cuenta");
+			TableColumn<SaldoCCostosDTO, Integer> columna2 = new TableColumn<>("Año");
+			TableColumn<SaldoCCostosDTO, String> columna3 = new TableColumn<>("Mes");
+			TableColumn<SaldoCCostosDTO, BigDecimal> columna4 = new TableColumn<>("Mvto_Debito");
+			TableColumn<SaldoCCostosDTO, BigDecimal> columna5 = new TableColumn<>("Mvto_Credito");
+			TableColumn<SaldoCCostosDTO, BigDecimal> columna6 = new TableColumn<>("Total_Debito");
+			TableColumn<SaldoCCostosDTO, BigDecimal> columna7 = new TableColumn<>("Todal_Credito");
 			
 			columna1.setCellValueFactory(new PropertyValueFactory<>("anno"));
 			columna2.setCellValueFactory(new PropertyValueFactory<>("mes"));
@@ -94,10 +96,10 @@ public class SaldosCentroFXMLController implements Initializable{
 
 	private void solicitarListaActualizada() {
 
-		ResponseEntity<SaldoCuenta[]> respuesta = restTemplate.getForEntity(INIT_URL + "/getAll", SaldoCuenta[].class);
-		Stream <SaldoCuenta> consumer = Stream.of(respuesta.getBody());
+		ResponseEntity<SaldoCentroDeCostos[]> respuesta = restTemplate.getForEntity(INIT_URL + "/getAll", SaldoCentroDeCostos[].class);
+		Stream <SaldoCentroDeCostos> consumer = Stream.of(respuesta.getBody());
 
-		consumer.forEach(log -> losSaldosCuenta.add(new SaldoCuentaDTO(log)));
+		consumer.forEach(log -> losSaldosCuenta.add(new SaldoCCostosDTO(log)));
 		
 	}
 

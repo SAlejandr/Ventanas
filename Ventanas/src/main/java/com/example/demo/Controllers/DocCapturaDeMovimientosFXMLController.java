@@ -25,6 +25,7 @@ import com.example.demo.model.pojos.CentroDeCosto;
 import com.example.demo.model.pojos.Cuenta;
 import com.example.demo.model.pojos.Documento;
 import com.example.demo.model.pojos.Estado;
+import com.example.demo.model.pojos.EstadosDeMes;
 import com.example.demo.model.pojos.IdDocumento;
 import com.example.demo.model.pojos.IdMovimiento;
 import com.example.demo.model.pojos.Mes;
@@ -198,14 +199,18 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		ResponseEntity<Mes[]> getMesesActivos = restTemplate.getForEntity(INIT_URL+"/mes/getAllDeAnnoActivo", Mes[].class);
 		
 		Stream<Mes> consumer = Stream.of(getMesesActivos.getBody());
-		Mes mes = consumer.findFirst().get();
+		Mes mes = consumer.filter(m -> m.getEstado().equals(EstadosDeMes.ACTIVO)).findFirst().get();
 		
-		ResponseEntity<Documento[]> respuestaDoc = restTemplate.postForEntity(INIT_URL + "/documento/getAllByMes", mes, Documento[].class);
+		HashMap<String, String> params = Maps.newHashMap();
+		params.put("nombre", mes.getNombre());
+		
+		ResponseEntity<Documento[]> respuestaDoc = restTemplate.getForEntity(INIT_URL + "/documento/getAllByMes?nombreMes={nombre}", Documento[].class, params);
 		Stream<Documento> consumerDoc = Stream.of(respuestaDoc.getBody());
 		mapDocumentos.clear();
 		documentosDTO.clear();
 		
 		consumerDoc.forEach(doc -> {
+			System.out.println(doc.toString());
 			mapDocumentos.put(doc.getIdDocumento(), doc);
 			documentosDTO.add(new DocumentoDTO(doc));
 		});
