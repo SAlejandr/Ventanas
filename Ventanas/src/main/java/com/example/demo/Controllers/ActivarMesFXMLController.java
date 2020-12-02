@@ -94,7 +94,7 @@ public class ActivarMesFXMLController implements Initializable{
 	@FXML protected void  onBotonGuardarClicked(ActionEvent actionEvent) {
 
 		MesFiscalId mesSeleccionado = mapMeses.get(comboMeses.getValue()).getIdFiscal();
-		int intMes = Integer.parseInt(mesSeleccionado.getMes());
+		int intMes = mesSeleccionado.getMes();
 		int intAnno = mesSeleccionado.getAnno().getElAnno();
 		
 		//Necesito buscar el mes que se va a activar
@@ -109,7 +109,7 @@ public class ActivarMesFXMLController implements Initializable{
 		Anno anno = getAnno.getBody();
 		
 		id.setAnno(anno);
-		id.setMes(intMes+"");
+		id.setMes(intMes);
 		
 		System.out.println("Voy a traer el objeto mes" + mesSeleccionado);
 //OJO TODO LO ANTERIOR SOBRA. ERA UAN APRUEBA SI NO TENEMOS OBJETO MES ID

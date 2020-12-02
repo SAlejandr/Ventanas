@@ -35,7 +35,6 @@ public class SaldoCCostosDTO {
 	
 	public SaldoCCostosDTO (SaldoCentroDeCostos s) {
 		
-		this(s.getElID().getCuenta().getCodCuenta(), s.getElID().getMes().getIdFiscal().getAnno().getElAnno(),s.getElID().getCentro().getCodCentro(), s.getElID().getMes().getIdFiscal().getMes(), s.getSumDebito(), s.getSumCredito(), s.getTotalDebito(), s.getTotalCredito());
+		this(s.getElID().getCuenta().getCodCuenta(), s.getElID().getMes().getIdFiscal().getAnno().getElAnno(), s.getElID().getCentro().getCodCentro(), s.getElID().getMes().getNombre(), s.getSumDebito(), s.getSumCredito(), s.getTotalDebito(), s.getTotalCredito());
 	}
-	
 }

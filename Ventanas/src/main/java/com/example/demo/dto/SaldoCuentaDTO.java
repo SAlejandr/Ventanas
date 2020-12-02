@@ -31,7 +31,7 @@ public class SaldoCuentaDTO {
 	
 	public SaldoCuentaDTO (SaldoCuenta s) {
 		
-		this(s.getId().getCuenta().getCodCuenta(), s.getId().getMes().getIdFiscal().getAnno().getElAnno(), s.getId().getMes().getIdFiscal().getMes(), s.getSumDebito(), s.getSumCredito(), s.getTotalDebito(), s.getTotalCredito());
+		this(s.getId().getCuenta().getCodCuenta(), s.getId().getMes().getIdFiscal().getAnno().getElAnno(), s.getId().getMes().getNombre(), s.getSumDebito(), s.getSumCredito(), s.getTotalDebito(), s.getTotalCredito());
 	}
 	
 }

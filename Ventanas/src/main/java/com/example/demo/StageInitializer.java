@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.io.IOException;
 
+import com.example.demo.Controllers.LoginFXMLController;
+import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.io.Resource;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.example.demo.VentanaPrincipal.StageReadyEvent;
 import com.example.demo.Controllers.ConfirmBox;
 import com.example.demo.Controllers.FXMLController;
-import com.example.demo.Controllers.LoginFXMLController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -21,64 +22,59 @@ import javafx.stage.Stage;
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
-	@Value("classpath:/fxml/Ventana.fxml")
-	private Resource ventanaResource;
 	@Value("classpath:/fxml/Login.fxml")
 	private Resource loginResource;
+
+	@Value("classpath:/fxml/Ventana.fxml")
+	private Resource ventanaResource;
 	
 	@Value("classpath:/templates/Estilos/ConfirmBoxStyle.css")
 	private Resource ccsConfirm;
 	
-	private Stage stage; 
-	private Scene scene1, scene2; 
-	private boolean acertar;
+	private Stage stage;
+	private Scene sceneLogin, sceneVentana;
+	private boolean auntenticado;
 
 	@Override
 	public void onApplicationEvent(StageReadyEvent event) {
 		// TODO Auto-generated method stub
 		Parent root;
 
+		auntenticado =false;
 		FXMLLoader loader;
-		FXMLLoader loaderW;
+		FXMLLoader loaderVentana;
 		try {
+			loaderVentana = new FXMLLoader(ventanaResource.getURL());
 			loader = new FXMLLoader(loginResource.getURL());
-			loaderW = new FXMLLoader(ventanaResource.getURL());
-			
-			stage = event.getStage();
-			
+
 			root = loader.load();
-			
-			stage.setTitle("Pantalla principal");
-			
-			scene1 = new Scene(root);
-			stage.setScene(scene1);
-			
-			
-			
-			acertar = false;
-			
-			LoginFXMLController login = loader.getController();
-			
-			login.getLoginButton().setOnMouseClicked(e -> {
+			stage = event.getStage();
+
+			sceneLogin = new Scene(root,1280,720);
+
+			sceneVentana = new Scene(loaderVentana.load(), 1280,720);
+
+			LoginFXMLController loginController = loader.getController();
+
+			loginController.getLoginButton().setOnMouseClicked(e ->{
 				e.consume();
-				acertar = login.logear();
-				if(acertar) {
-					try {
-						scene2 = new Scene(loaderW.load(), 1280, 800);
-						stage.setScene(scene2);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				auntenticado = loginController.logear();
+				if(auntenticado) {
+					stage.setScene(sceneVentana);
+					FXMLController f = loaderVentana.getController();
+					f.setUserDTO(loginController.getUser());
+				}else{
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("No existe usuario o contraseña");
+					alert.showAndWait();
 				}
-					
 			});
 			
 			stage.setOnCloseRequest(e ->{
 				e.consume();
-				FXMLController f = loaderW.getController();
+				FXMLController f = loaderVentana.getController();
 				try {
-					if(acertar)
+					if(auntenticado)
 						f.cerrarTodas();
 					closeProgram();
 				} catch (IOException e1) {
@@ -87,6 +83,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 				}
 			});
 			
+			stage.setTitle("Pantalla principal");
+
+			stage.setScene(sceneLogin);
 			stage.show();
 
 		} catch (IOException e) {
@@ -98,8 +97,6 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
 	}
 
-	
-
 	private void closeProgram() throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -107,7 +104,5 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 		if(salir)
 			stage.close();
 	}
-	
-	
 
 }

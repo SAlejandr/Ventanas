@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -145,14 +146,18 @@ public class MesesFXMLController implements Initializable{
 								elAnno(new_anno.getValue()).
 								build()
 								).
-						mes(new_id.getText()).
+						mes(Integer.parseInt(new_id.getText())).
 						build()
 						).
 				inicio(new_f_init.getValue()).
 				fin(new_f_end.getValue()).
 				estado(new_estado.getValue()).
 				build();
-		mes.setNombre(mes.getIdFiscal().getMes()+"-"+mes.getIdFiscal().getAnno().getElAnno());
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM");
+		LocalDate ld = LocalDate.of(2020,mes.getIdFiscal().getMes(), 1);
+		
+		mes.setNombre(dtf.format(ld)+"-"+mes.getIdFiscal().getAnno().getElAnno());
 		try {
 
 			restTemplate.postForObject(INIT_URL + "/add", mes, Mes.class);
@@ -176,7 +181,7 @@ public class MesesFXMLController implements Initializable{
 								elAnno(new_anno.getValue()).
 								build()
 								).
-						mes(new_id.getText()).
+						mes(Integer.parseInt(upd_id.getText())).
 						build()
 						).
 				inicio(new_f_init.getValue()).
