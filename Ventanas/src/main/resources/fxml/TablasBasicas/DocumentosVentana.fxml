@@ -32,7 +32,6 @@
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#refrescarLista" text="Refresar" />
                                     <Button mnemonicParsing="false" onAction="#borrar" text="Borrar" />
-                                    <Button mnemonicParsing="false" onAction="#revisarMovimientos" text="Movimientos" />
                                  </children>
                                  <padding>
                                     <Insets bottom="15.0" top="15.0" />

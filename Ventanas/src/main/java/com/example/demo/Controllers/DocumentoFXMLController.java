@@ -186,48 +186,6 @@ public class DocumentoFXMLController implements Initializable{
 		}
 	}
 
-	@FXML public void revisarMovimientos() throws IOException {
-
-		DocumentoDTO dto = tabla.getSelectionModel().getSelectedItem();
-		TipoDocumento tipoDoc = new TipoDocumento();
-		
-		tipoDoc.setTipoDoc(dto.getTipoDocumento());
-		
-		IdDocumento id = new IdDocumento(tipoDoc , dto.getNumDocumento());
-
-		Documento d = mapDocumentos.get(id);
-
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TablasBasicas/CapturaMovimientos.fxml"));
-		Parent root = (Parent)loader.load();
-		CapturaDeMovimientosFXMLController controller = loader.getController();
-
-		controller.setDocumento(d);
-		controller.setMapCCostos(mapCCostos);
-		controller.setMapEstado(mapEstado);
-		controller.setMapTercero(mapTercero);
-		controller.setMapCuenta(mapCuenta);
-		
-		controller.iniciar();
-
-		Stage stage = new Stage();
-		Scene scene = new Scene(root);
-		stage.setTitle("Captura de movimientos");
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setScene(scene);
-		stage.setOnCloseRequest( e -> {
-			e.consume();
-			try {
-				controller.guardarYSalir();
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		stage.show();
-		
-		System.out.println(d.toString());
-	}
 
 	@FXML public void generar() {
 

@@ -71,15 +71,13 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 	//Movimientos
 	@FXML private GridPane seccionMovimiento;
-	@FXML private TextField elItem;
 	@FXML private TextArea elConcepto;
 	@FXML private TextField elCredito;
 	@FXML private TextField elDebito;
 	@FXML private TextField laBase;
-	@FXML private ChoiceBox<Integer> elCCostos;
+	@FXML private ChoiceBox<String> elCCostos;
 	@FXML private ComboBox<String> laCuenta;
 	@FXML private ComboBox<String> elTercero;
-	@FXML private ComboBox<String> elEstado;
 	@FXML private TableView<MovimientoDTO> tabla;
 
 	private HashMap<IdDocumento, Documento> mapDocumentos = Maps.newHashMap();
@@ -89,9 +87,8 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 	private HashMap<String, Tercero> mapTercero= Maps.newHashMap();
 	private TreeMap<String, Cuenta> mapCuenta= Maps.newTreeMap();
 	private HashMap<String, Estado> mapEstado= Maps.newHashMap();
-	private HashMap<Integer, CentroDeCosto> mapCCostos= Maps.newHashMap();
-	private HashMap<IdMovimiento, Movimiento> movimientosReservado = Maps.newHashMap();
-	private static HashSet<Object> responsables = Sets.newHashSet();
+	private HashMap<String, CentroDeCosto> mapCCostos= Maps.newHashMap();
+	private static HashSet<Responsable> responsables = Sets.newHashSet();
 
 	private ObservableList<DocumentoDTO> documentosDTO = FXCollections.observableArrayList();
 	private ObservableList<String> tipoDeDocumentos = FXCollections.observableArrayList();
@@ -99,13 +96,14 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 	private ObservableList<String> cuentas = FXCollections.observableArrayList();
 	private ObservableList<String> estados = FXCollections.observableArrayList();
 	private ObservableList<String> terceros = FXCollections.observableArrayList();
-	private ObservableList<Integer> centros = FXCollections.observableArrayList();
+	private ObservableList<String> centros = FXCollections.observableArrayList();
 
 	private RestTemplate restTemplate = new RestTemplate();
 	private Set<Movimiento> movimientos = Sets.newHashSet();
 
 	private final String INIT_URL = "http://localhost:8080/pro";
 
+	private MovimientoDTO movimientoDTO;
 
 	private boolean seleccionado;
 	private boolean guardado;
@@ -120,14 +118,24 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 		seccionMovimiento.setDisable(true);
 
-
-
 		//documento = new Documento();
 		seleccionado = true;
 		guardado =true;
 
 
 		refrescarLista();
+		Alert alerta = new Alert(AlertType.WARNING);
+		alerta.setTitle("Alerta");
+
+		elDebito.setOnKeyTyped(e -> {
+			e.consume();
+			
+			elCredito.setText(Integer.toString(0));
+		});
+		elCredito.setOnKeyTyped(e -> {
+			e.consume();
+			elDebito.setText(Integer.toString(0));
+		});
 		
 
 		laCuenta.setOnAction(e->{
@@ -145,17 +153,15 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 		});
 
-
-
 		TableColumn<MovimientoDTO, String> columna1 = new TableColumn<>("Item");
 		TableColumn<MovimientoDTO, String> columna2 = new TableColumn<>("Concepto");
 		TableColumn<MovimientoDTO, LocalDate> columna3 = new TableColumn<>("Fecha");
-		TableColumn<MovimientoDTO, Integer> columna4 = new TableColumn<>("Cuenta");
+		TableColumn<MovimientoDTO, String> columna4 = new TableColumn<>("Cuenta");
 		TableColumn<MovimientoDTO, String> columna5 = new TableColumn<>("Tercero");
 		TableColumn<MovimientoDTO, Integer> columna6 = new TableColumn<>("C_Costos");
-		TableColumn<MovimientoDTO, Float> columna7 = new TableColumn<>("Credito");
-		TableColumn<MovimientoDTO, Float> columna8 = new TableColumn<>("Debito");
-		TableColumn<MovimientoDTO, Float> columna9 = new TableColumn<>("Base");
+		TableColumn<MovimientoDTO, BigDecimal> columna7 = new TableColumn<>("Credito");
+		TableColumn<MovimientoDTO, BigDecimal> columna8 = new TableColumn<>("Debito");
+		TableColumn<MovimientoDTO, BigDecimal> columna9 = new TableColumn<>("Base");
 		TableColumn<MovimientoDTO, String> columna10 = new TableColumn<>("Estado");
 
 		columna1.setCellValueFactory(new PropertyValueFactory<>("item"));
@@ -172,15 +178,12 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		tabla.setItems(movimientosDTO);
 		tabla.getColumns().addAll(columna1,columna2,columna3,columna4,columna5,columna6,columna7,columna8, columna9, columna10);
 
-
-
-
 		TableColumn<DocumentoDTO, Long> columnaDoc1 = new TableColumn<DocumentoDTO, Long>("Nº Documento");
 		TableColumn<DocumentoDTO, String> columnaDoc2 = new TableColumn<DocumentoDTO, String>("Tipo Documento");
 		TableColumn<DocumentoDTO, String> columnaDoc3 = new TableColumn<DocumentoDTO, String>("Concepto");
 		TableColumn<DocumentoDTO, LocalDate> columnaDoc4 = new TableColumn<DocumentoDTO, LocalDate>("Fecha");
 		TableColumn<DocumentoDTO, String> columnaDoc5 = new TableColumn<DocumentoDTO, String>("Responsable");
-		TableColumn<DocumentoDTO, Float> columnaDoc6 = new TableColumn<DocumentoDTO, Float>("Total");
+		TableColumn<DocumentoDTO, BigDecimal> columnaDoc6 = new TableColumn<DocumentoDTO, BigDecimal>("Total");
 
 		columnaDoc1.setCellValueFactory(new PropertyValueFactory<>("numDocumento"));
 		columnaDoc2.setCellValueFactory(new PropertyValueFactory<>("tipoDocumento"));
@@ -191,8 +194,6 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 		tablaDocumento.setItems(documentosDTO);
 		tablaDocumento.getColumns().addAll(columnaDoc1,columnaDoc2,columnaDoc3,columnaDoc4,columnaDoc5,columnaDoc6);
-
-
 
 	}
 
@@ -222,7 +223,9 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		Stream<Responsable> consumer1 = Stream.of(respuesta1.getBody());
 		consumer1.forEach(responsables::add);
 
-		responsableCombo.setItems(FXCollections.observableArrayList(responsables.toArray()));
+		Vector<String> losResponsable = new Vector<String>();
+		responsables.stream().forEach(r -> losResponsable.add(r.getCodRes()+"-"+r.getNombre()));
+		responsableCombo.setItems(FXCollections.observableArrayList(losResponsable.toArray()));
 
 		ResponseEntity<Cuenta[]> respuesta2 = restTemplate.getForEntity(INIT_URL+"/cuentas/getAll/1", Cuenta[].class);
 		ResponseEntity<CentroDeCosto[]> respuesta3 = restTemplate.getForEntity(INIT_URL+"/centroDeCosto/get/all", CentroDeCosto[].class);
@@ -231,9 +234,9 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		Stream<Cuenta> consumer2 = Stream.of(respuesta2.getBody());
 		consumer2.forEach(cuenta -> mapCuenta.put(cuenta.getCodCuenta(), cuenta));
 		Stream<CentroDeCosto> consumer3 = Stream.of(respuesta3.getBody());
-		consumer3.forEach(cCostos -> mapCCostos.put(cCostos.getCodCentro(), cCostos));
+		consumer3.forEach(cCostos -> mapCCostos.put(cCostos.getCodCentro()+"-"+ cCostos.getNombre(), cCostos));
 		Stream<Tercero> consumer4 = Stream.of(respuesta4.getBody());
-		consumer4.forEach(tercero -> mapTercero.put(tercero.getId(), tercero));
+		consumer4.forEach(tercero -> mapTercero.put(tercero.getId()+"-"+ tercero.getNombre() , tercero));
 
 
 		ResponseEntity<TipoDocumento[]> respuesta5 = restTemplate.getForEntity(INIT_URL + "/tipoDocumento/getAll", TipoDocumento[].class);
@@ -255,7 +258,6 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 		elCCostos.setItems(centros);
 		laCuenta.setItems(cuentas);
-		elEstado.setItems(estados);
 		elTercero.setItems(terceros);
 
 		if(seleccionado && documento != null)
@@ -270,9 +272,6 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		movimientosDTO.clear();
 		movimientos.clear();
 
-
-		movimientosReservado.clear();
-
 		cuentas.clear();
 		centros.clear();
 		terceros.clear();
@@ -284,14 +283,10 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 			consumer.forEach(mov -> {
 				System.out.println(mov);
 				movimientos.add(mov);
-				movimientosReservado.put(mov.getId(), mov);
 				movimientosDTO.add(new MovimientoDTO(mov));
 
 			});
 
-			movimientosReservado.keySet().stream().forEach(id -> {
-				System.out.println(movimientosReservado.get(id).toString());
-			});
 		} catch (HttpClientErrorException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -304,81 +299,79 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 		elCCostos.setItems(centros);
 		laCuenta.setItems(cuentas);
-		elEstado.setItems(estados);
 		elTercero.setItems(terceros);
 
 	}
 
 	@FXML public void guardar() {
 		guardado = false;
-		int item = 0;
+
+
+		boolean correcto = false;
+		
+		int item =0;
+		if(movimientoDTO != null)
+			item = movimientoDTO.getItem();
+		else
+			item = movimientos.size();
+		IdMovimiento id;
+		
+		if(item == movimientos.size())
+			id = new IdMovimiento(item+1, documento);
+		else
+			id = new IdMovimiento(item, documento);
+
+		Movimiento m = Movimiento.builder().
+				id(id).
+				fecha(laFecha.getValue()).
+				concepto(elConcepto.getText()).
+				cuenta(mapCuenta.get(laCuenta.getValue())).
+				estado(mapEstado.get("AC")).
+				build();
 
 		try {
-			FuncionesVentanas.marcarErrorInt(elItem);
-			item = Integer.parseUnsignedInt(elItem.getText());
+			FuncionesVentanas.marcarErrorFloat(elCredito);
+			FuncionesVentanas.marcarErrorFloat(elDebito);
+			FuncionesVentanas.marcarErrorFloat(laBase);
 
+			m.setCredito( new BigDecimal(elCredito.getText()));
+			m.setDebito(new BigDecimal(elDebito.getText()));
+			m.setBase(new BigDecimal(laBase.getText()));
+
+			correcto = true;
 		}catch (NumberFormatException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Cuidado");
-			alert.setContentText( "El campo item debe ser un numero entero");
-			alert.showAndWait();
+			// TODO: handle exception
+			try {
+				AlertBox.display("Cuidado", "Credito, debito y base deben ser numericos");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
-		if(item != 0 ) {
-			boolean correcto = false;
+		if (m.getCuenta().isTerceros()) {
+			m.setTercero(mapTercero.get(elTercero.getValue()));
+		}else {
+			m.setTercero(mapTercero.get(".-DESCONOCIDO"));
+		}
 
-			IdMovimiento id = new IdMovimiento(item, documento);
-
-			Movimiento m = Movimiento.builder().
-					id(id).
-					fecha(laFecha.getValue()).
-					concepto(elConcepto.getText()).
-					cuenta(mapCuenta.get(laCuenta.getValue())).
-					estado(mapEstado.get(elEstado.getValue())).
-					build();
-
-			try {
-				FuncionesVentanas.marcarErrorFloat(elCredito);
-				FuncionesVentanas.marcarErrorFloat(elDebito);
-				FuncionesVentanas.marcarErrorFloat(laBase);
-
-				m.setCredito( new BigDecimal(elCredito.getText()));
-				m.setDebito(new BigDecimal(elDebito.getText()));
-				m.setBase(new BigDecimal(laBase.getText()));
-
-				correcto = true;
-			}catch (NumberFormatException e) {
-				// TODO: handle exception
-				try {
-					AlertBox.display("Cuidado", "Credito, debito y base deben ser numericos");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+		if (m.getCuenta().isCcostos()) {
+			m.setCCostos(mapCCostos.get(elCCostos.getValue()));
+		}else {
+			m.setCCostos(mapCCostos.get(0+"-SIN CENTRO"));
+		}
+		if(correcto) {
+			if(movimientos.contains(m)){
+				restTemplate.put(INIT_URL+"/movimiento/update",m);
+			}else{
+				restTemplate.postForEntity(INIT_URL+"/movimiento/add", m, Movimiento.class);
 			}
+			
+			System.out.println(m);
+			movimientos.add(m);
+			movimientosDTO.add(new MovimientoDTO(m));
 
-			if (m.getCuenta().isTerceros()) {
-				m.setTercero(mapTercero.get(elTercero.getValue()));
-			}else {
-				m.setTercero(mapTercero.get("."));
-			}
-
-			if (m.getCuenta().isCcostos()) {
-				m.setCCostos(mapCCostos.get(elCCostos.getValue()));
-			}else {
-				m.setCCostos(mapCCostos.get(0));
-			}
-			if(correcto) {
-				if(movimientos.contains(m)){
-					restTemplate.put(INIT_URL+"/movimiento/update",m);
-				}else{
-					restTemplate.postForEntity(INIT_URL+"/movimiento/add", m, Movimiento.class);
-				}
-				movimientos.add(m);
-				movimientosDTO.add(new MovimientoDTO(m));
-
-				limpiarMov();
-			}
+			limpiarMov();
 		}
 
 	}
@@ -387,9 +380,9 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 		MovimientoDTO dto = tabla.getSelectionModel().getSelectedItem();
 
-		elItem.setText(dto.getItem()+"");
+		movimientoDTO = dto;
+
 		elConcepto.setText(dto.getConcepto());
-		elEstado.setValue(dto.getEstado());
 		elCCostos.setValue(dto.getCcostos());
 		elTercero.setValue(dto.getTercero());
 		elCredito.setText(dto.getCredito()+"");
@@ -405,29 +398,29 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		boolean sale = false;
 		Alert alert = new Alert(AlertType.INFORMATION);
 		//alert.getButtonTypes().
-		if(advertir()) {
+		if(!advertir()) {
 			guardarDocumento();
-
+			guardado = true;
 		}else {
 			alert.setTitle("Cerrar documento");
 			alert.setContentText("No se puede guardar documentos descuadrados");
-
+			alert.showAndWait();
 		}
 
 	}
 
 	public void guardarDocumento() {
-		BigDecimal valorTotal = new BigDecimal(0);
-		
+		BigDecimal valorTotal = BigDecimal.ZERO;
+
 		for(Movimiento m : movimientos) {
 			valorTotal = valorTotal.add(m.getDebito());
 			System.err.println("Total::::::::::::::::::::::::::::::::"+valorTotal);
 			System.err.println("Debito:+:+:+:+:+:+:+:+:+:+:+:+:+:+:+:"+m.getDebito());
-			
+
 		};
 
 		documento.setValorTotal(valorTotal);
-		
+
 		System.err.println(documento.toString());
 
 		if(estadoAction.equals(EstadoDeAplicacion.CREANDO)) {
@@ -447,30 +440,23 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 	public boolean advertir() {
 
-		return (sacarTotal().compareTo(new BigDecimal(0)) != 0 ? true : false);
+		return (sacarTotal().compareTo(BigDecimal.ZERO) != 0 ? true : false);
 	}
 
 	public BigDecimal sacarTotal() {
 
-		BigDecimal total = new BigDecimal(0);;
+		BigDecimal total = BigDecimal.ZERO;
 
-		Iterator<Movimiento> iterator = movimientos.iterator();
-
-		while (iterator.hasNext()) {
-			Movimiento movimiento = iterator.next();
-
-			total.add(movimiento.getDebito());
-			total.subtract(movimiento.getCredito());
-
+		System.err.println(movimientos.size());
+		for(Movimiento m : movimientos) {
+			total = total.add(m.getDebito());
+			total = total.subtract(m.getCredito());
+			System.err.println("total ###################################>>>>>>>>>>>>>"+total);
 		}
+
 		
-	System.err.println("total ###################################>>>>>>>>>>>>>"+total);
 
 		return total;
-	}
-
-	@FXML public void restaurarMovimientos() {
-		System.out.println("restaurar");
 	}
 
 	@FXML public void modificar() {
@@ -486,7 +472,7 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 				docConcepto.setText(dto.getConcepto());
 				tipoDoc.setValue(documento.getIdDocumento().getTipoDocumento().getTipoDoc());
 				laFecha.setValue(dto.getFecha());
-				responsableCombo.setValue(documento.getResponsable());
+				responsableCombo.setValue(documento.getResponsable().getCodRes()+"-"+documento.getResponsable().getNombre());
 
 				estadoAction = EstadoDeAplicacion.MODIFICANDO;
 				estadoAplicacion = EstadoDeAplicacion.MODIFICANDO;
@@ -507,7 +493,9 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 				buscar.setVisible(false);
 				capturadora.setVisible(true);
 
-				estadoAplicacion = EstadoDeAplicacion.MODIFICANDO;
+				numDoc.requestFocus();
+
+				estadoAplicacion = EstadoDeAplicacion.CREANDO;
 				estadoAction = EstadoDeAplicacion.CREANDO;
 			}else if(capturadora.isVisible() && guardado) {
 				capturadora.setVisible(false);
@@ -528,13 +516,21 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		id.setNumDocumento(Long.parseLong(numDoc.getText()));
 		id.setTipoDocumento(td);
 
+		String[] datosResponsable = responsableCombo.getValue().toString().split("-");
 		documento = Documento.builder().
 				idDocumento(id).
 				concepto(docConcepto.getText()).
 				fecha(laFecha.getValue()).
-				responsable((Responsable) responsableCombo.getSelectionModel().getSelectedItem()).
-				userResponsable(Usuario.builder().id(usuario.getId()).build()).
-				estado(Estado.builder().codEstado("AC").build()).
+				responsable(Responsable.builder().
+						codRes(Integer.parseInt(datosResponsable[0])).
+						nombre(datosResponsable[1]).
+						build()).
+				userResponsable(Usuario.builder().
+						id(usuario.getId()).
+						build()).
+				estado(Estado.builder().
+						codEstado("AC").
+						build()).
 				build();
 
 		try{
@@ -548,8 +544,15 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 			movimientos.stream().forEach(System.out::println);
 			estadoAplicacion = EstadoDeAplicacion.AGREGANDO;
 
+			guardado = false;
+			
+			
 			seccionDocumento.setDisable(true);
 			seccionMovimiento.setDisable(false);
+			laCuenta.requestFocus();
+
+			elConcepto.setText(docConcepto.getText());
+			
 		}catch (HttpClientErrorException e){
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Guardado");
@@ -561,32 +564,37 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 
 	@FXML public void cerrarDocumento(ActionEvent actionEvent) {
 
+		guardarYSalir();
+		
+		
 		if(!advertir()) {
-			System.err.println("advertir -----------> "+ advertir());
+			System.err.println("advertir -----------> "+ documento.getValorTotal());
 			limpiarDoc();
 		}
-		guardarDocumento();
-
 
 	}
 
 	public void limpiarMov() {
-		elItem.clear();
 		elConcepto.clear();
 		elCredito.clear();
 		elDebito.clear();
 		laBase.clear();
-		laCuenta.setValue("");
-		elEstado.setValue("AC");
-
 	}
 
 	public void limpiarDoc() {
 		limpiarMov();
 
-		numDoc.clear();;
-		docConcepto.clear();;
+		seccionDocumento.setDisable(false);
+		seccionMovimiento.setDisable(true);
+
+		numDoc.clear();
+		docConcepto.clear();
 		tipoDoc.setValue("");
 		responsableCombo.setValue("");
+
+		movimientosDTO.clear();
+		movimientos.clear();
+
+
 	}
 }

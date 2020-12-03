@@ -18,7 +18,7 @@ public class MovimientoDTO {
 	private int item;
 	private LocalDate fecha;
 	private String concepto;
-	private int ccostos;
+	private String ccostos;
 	private String tercero;
 	private String cuenta;
 	private BigDecimal base;
@@ -33,13 +33,14 @@ public class MovimientoDTO {
 		item = movimiento.getId().getItem();
 		fecha = movimiento.getFecha();
 		concepto = movimiento.getConcepto();
-		ccostos = (movimiento.getCCostos() != null)?movimiento.getCCostos().getCodCentro():0;
-		tercero = (movimiento.getTercero() != null)?movimiento.getTercero().getId():"";
-		cuenta = movimiento.getCuenta().getCodCuenta();
+		ccostos = (movimiento.getCCostos() != null)?movimiento.getCCostos().getCodCentro()+"-"+movimiento.getCCostos().getNombre():0+"-";
+		tercero = (movimiento.getTercero() != null)?movimiento.getTercero().getId()+"-"+movimiento.getTercero().getNombre():".-";
+		cuenta = movimiento.getCuenta().getCodCuenta()+"-"+movimiento.getCuenta().getNombre();
 		base = movimiento.getBase();
 		credito = movimiento.getCredito();
 		debito = movimiento.getDebito();
 		estado = movimiento.getEstado().getDescripcion();
 		
 	}
+	
 }

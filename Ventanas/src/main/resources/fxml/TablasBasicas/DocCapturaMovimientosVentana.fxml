@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.DocCapturaDeMovimientosFXMLController">
    <children>
@@ -49,14 +48,13 @@
                           </rowConstraints>
                            <children>
                               <Label text="Fecha" GridPane.rowIndex="1" />
-                              <DatePicker fx:id="laFecha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="laFecha" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="Numero Documento" />
                               <TextField fx:id="numDoc" GridPane.columnIndex="1" />
                               <TextArea fx:id="docConcepto" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="2" />
                               <ComboBox fx:id="tipoDoc" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
                               <Label text="Tipo Documento" GridPane.columnIndex="2" />
                               <Label text="Concepto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#refrescarLista" text="Refrescar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                               <Button mnemonicParsing="false" onAction="#crearDocumento" text="Guardar documento" GridPane.rowIndex="3" />
                               <ComboBox fx:id="responsableCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Responsable" GridPane.rowIndex="2" />
@@ -82,32 +80,28 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Item" />
                               <Label text="Concepto" GridPane.columnIndex="2" />
-                              <Label text="Cuenta" GridPane.rowIndex="1" />
-                              <Label text="Centro de Costo" GridPane.rowIndex="2" />
-                              <Label text="Tercero" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Label text="Base" GridPane.rowIndex="4" />
+                              <Label text="Cuenta" />
+                              <Label text="Centro de Costo" GridPane.rowIndex="1" />
+                              <Label text="Tercero" GridPane.rowIndex="2" />
+                              <Label text="Base" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label text="Debito" GridPane.rowIndex="3" />
                               <Label text="Credito" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                              <TextField fx:id="elItem" GridPane.columnIndex="1" />
                               <TextField fx:id="elDebito" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField fx:id="elCredito" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                              <TextField fx:id="laBase" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <ChoiceBox fx:id="elCCostos" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="laCuenta" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="laBase" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <ChoiceBox fx:id="elCCostos" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="laCuenta" prefWidth="150.0" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
                               </ComboBox>
-                              <ComboBox fx:id="elTercero" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="elTercero" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Button mnemonicParsing="false" onAction="#guardar" text="Guardar movimiento" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <ComboBox fx:id="elEstado" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                              <Label text="Estado" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                               <Button mnemonicParsing="false" onAction="#cargar" text="Cargar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                               <Button mnemonicParsing="false" onAction="#cerrarDocumento" text="Cerrar Documento" GridPane.rowIndex="5" />
                               <TextArea fx:id="elConcepto" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowSpan="2" />
-                              <Button fx:id="capturador" mnemonicParsing="false" onAction="#restaurarMovimientos" text="Restaurar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#refrescarLista" text="Refrescar" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
