@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -78,18 +79,18 @@ public class DocumentoFXMLController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		refrescarLista();
-
-		TableColumn<DocumentoDTO, Long> columna1 = new TableColumn<DocumentoDTO, Long>("Nº Documento");
-		TableColumn<DocumentoDTO, String> columna2 = new TableColumn<DocumentoDTO, String>("Tipo Documento");
-		TableColumn<DocumentoDTO, String> columna3 = new TableColumn<DocumentoDTO, String>("Concepto");
-		TableColumn<DocumentoDTO, LocalDate> columna4 = new TableColumn<DocumentoDTO, LocalDate>("Fecha");
+		
+		TableColumn<DocumentoDTO, String> columna1 = new TableColumn<DocumentoDTO, String>("Tipo Documento");
+		TableColumn<DocumentoDTO, Long> columna2 = new TableColumn<DocumentoDTO, Long>("Nº Documento");
+		TableColumn<DocumentoDTO, LocalDate> columna3 = new TableColumn<DocumentoDTO, LocalDate>("Fecha");
+		TableColumn<DocumentoDTO, String> columna4 = new TableColumn<DocumentoDTO, String>("Concepto");
 		TableColumn<DocumentoDTO, String> columna5 = new TableColumn<DocumentoDTO, String>("Responsable");
-		TableColumn<DocumentoDTO, Float> columna6 = new TableColumn<DocumentoDTO, Float>("Total");
+		TableColumn<DocumentoDTO, BigDecimal> columna6 = new TableColumn<DocumentoDTO, BigDecimal>("Total");
 
-		columna1.setCellValueFactory(new PropertyValueFactory<>("numDocumento"));
-		columna2.setCellValueFactory(new PropertyValueFactory<>("tipoDocumento"));
-		columna3.setCellValueFactory(new PropertyValueFactory<>("concepto"));
-		columna4.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+		columna1.setCellValueFactory(new PropertyValueFactory<>("tipoDocumento"));
+		columna2.setCellValueFactory(new PropertyValueFactory<>("numDocumento"));
+		columna3.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+		columna4.setCellValueFactory(new PropertyValueFactory<>("concepto"));
 		columna5.setCellValueFactory(new PropertyValueFactory<>("responsable"));
 		columna6.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 
@@ -176,7 +177,7 @@ public class DocumentoFXMLController implements Initializable{
 				Documento doc = Documento.builder().idDocumento(id).build();
 
 
-				restTemplate.delete(INIT_URL+"/delete",doc);
+				restTemplate.delete(INIT_URL+"documento/delete",doc);
 
 
 			}catch (HttpClientErrorException e) {
@@ -186,6 +187,48 @@ public class DocumentoFXMLController implements Initializable{
 		}
 	}
 
+	@FXML public void revisarMovimientos() throws IOException {
+
+		DocumentoDTO dto = tabla.getSelectionModel().getSelectedItem();
+		TipoDocumento tipoDoc = new TipoDocumento();
+		
+		tipoDoc.setTipoDoc(dto.getTipoDocumento());
+		
+		IdDocumento id = new IdDocumento(tipoDoc , dto.getNumDocumento());
+
+		Documento d = mapDocumentos.get(id);
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TablasBasicas/CapturaMovimientos.fxml"));
+		Parent root = (Parent)loader.load();
+		CapturaDeMovimientosFXMLController controller = loader.getController();
+
+		controller.setDocumento(d);
+		controller.setMapCCostos(mapCCostos);
+		controller.setMapEstado(mapEstado);
+		controller.setMapTercero(mapTercero);
+		controller.setMapCuenta(mapCuenta);
+		
+		controller.iniciar();
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(root);
+		stage.setTitle("Captura de movimientos");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setScene(scene);
+		stage.setOnCloseRequest( e -> {
+			e.consume();
+			try {
+				controller.guardarYSalir();
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		stage.show();
+		
+		System.out.println(d.toString());
+	}
 
 	@FXML public void generar() {
 

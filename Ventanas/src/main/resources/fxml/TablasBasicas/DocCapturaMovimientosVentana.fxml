@@ -29,7 +29,7 @@
       </HBox>
       <AnchorPane VBox.vgrow="ALWAYS">
          <children>
-            <ScrollPane fx:id="capturadora" fitToWidth="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane fx:id="capturadora" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <VBox>
                      <children>
@@ -49,15 +49,15 @@
                            <children>
                               <Label text="Fecha" GridPane.rowIndex="1" />
                               <DatePicker fx:id="laFecha" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Numero Documento" />
-                              <TextField fx:id="numDoc" GridPane.columnIndex="1" />
+                              <Label text="Numero Documento" GridPane.columnIndex="2" />
                               <TextArea fx:id="docConcepto" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-                              <ComboBox fx:id="tipoDoc" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
-                              <Label text="Tipo Documento" GridPane.columnIndex="2" />
+                              <ComboBox fx:id="tipoDoc" editable="true" prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Label text="Tipo Documento" />
                               <Label text="Concepto" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Button mnemonicParsing="false" onAction="#crearDocumento" text="Guardar documento" GridPane.rowIndex="3" />
                               <ComboBox fx:id="responsableCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Responsable" GridPane.rowIndex="2" />
+                              <TextField fx:id="numDoc" GridPane.columnIndex="3" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -126,7 +126,7 @@
                   </VBox>
                </content>
             </ScrollPane>
-            <ScrollPane fx:id="buscar" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane fx:id="buscar" fitToWidth="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <VBox>
                      <children>

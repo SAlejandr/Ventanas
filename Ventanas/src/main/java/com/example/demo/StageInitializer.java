@@ -56,13 +56,13 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
 			LoginFXMLController loginController = loader.getController();
 
-			loginController.getLoginButton().setOnMouseClicked(e ->{
+			loginController.getLoginBoton().setOnMouseClicked(e ->{
 				e.consume();
-				auntenticado = loginController.logear();
+				auntenticado = loginController.onLoginBotonClicked();
 				if(auntenticado) {
 					stage.setScene(sceneVentana);
 					FXMLController f = loaderVentana.getController();
-					f.setUserDTO(loginController.getUser());
+					f.setUserDTO(loginController.getUserDTO());
 				}else{
 					Alert alert = new Alert(Alert.AlertType.ERROR);
 					alert.setContentText("No existe usuario o contraseña");

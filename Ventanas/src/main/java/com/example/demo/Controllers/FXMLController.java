@@ -85,7 +85,7 @@ public class FXMLController {
 		stage.show();
 	}
 
-	@FXML public void capturarMovimientos() throws IOException {
+	@FXML public void docCapturarMovimientos() throws IOException {
 		System.err.println("Esninvdpiosnipn ------>"+userDTO);
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TablasBasicas/DocCapturaMovimientosVentana.fxml"));
@@ -95,13 +95,7 @@ public class FXMLController {
 
 
 		Stage stage = new Stage();
-		stage.setOnCloseRequest(e -> {
-			if(controller.advertir()) {
-				controller.guardarYSalir();
-				stage.close();
-			}
-		});
-		Scene scene = new Scene(root,1280,720);
+		Scene scene = new Scene(root,1280,800);
 		stage.setTitle("Captura de Movimientos");
 		stage.setScene(scene);
 		stage.show();
@@ -384,7 +378,55 @@ public class FXMLController {
 		stage.setScene(scene);
 		stage.show();
 		
-	}	
+	}
+
+	@FXML public void BalanceGeneralVentana() throws IOException {
+
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportes/BalanceGeneralVentana.fxml"));
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(root,500,500);
+		stage.setTitle("Reporte de Balance General");
+		stage.setScene(scene);
+		stage.show();
+
+	}
+
+	@FXML public void LibroMayorVentana() throws IOException {
+
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportes/LibroMayorVentana.fxml"));
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(root,500,500);
+		stage.setTitle("Libro Mayor y Balance");
+		stage.setScene(scene);
+		stage.show();
+
+	}
+	
+	@FXML public void LibroDiarioVentana() throws IOException {
+
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportes/LibroDiarioVentana.fxml"));
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(root,500,500);
+		stage.setTitle("Libro Diario");
+		stage.setScene(scene);
+		stage.show();
+
+	}
+	
+	@FXML public void LibrosAuxiliaresVentana() throws IOException {
+
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportes/LibrosAuxiliaresVentana.fxml"));
+
+		Stage stage = new Stage();
+		Scene scene = new Scene(root,500,500);
+		stage.setTitle("Libros Auxiliares");
+		stage.setScene(scene);
+		stage.show();
+
+	}
 	
 	@FXML public void CuentasNoAfectablesVentana() throws IOException {
 		

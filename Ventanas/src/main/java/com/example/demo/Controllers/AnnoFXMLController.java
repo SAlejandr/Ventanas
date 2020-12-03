@@ -69,7 +69,7 @@ public class AnnoFXMLController implements Initializable{
 
 			solicitarListaActualizada();
 
-			TableColumn<Anno, String> columna1 = new TableColumn<Anno, String>("el Anno");
+			TableColumn<Anno, String> columna1 = new TableColumn<Anno, String>("Año");
 			TableColumn<Anno, LocalDate> columna2 = new TableColumn<Anno, LocalDate>("Inicio");
 			TableColumn<Anno, LocalDate> columna3 = new TableColumn<Anno, LocalDate>("Fin");
 			TableColumn<Anno, Boolean> columna4 = new TableColumn<Anno, Boolean>("Cerrado");
@@ -90,9 +90,9 @@ public class AnnoFXMLController implements Initializable{
 	}
 
 	private void solicitarListaActualizada() {
-
-		losAnnos.clear();
 		
+		losAnnos.clear();
+
 		ResponseEntity<Anno[]> respuesta = restTemplate.getForEntity(INIT_URL + "/get/all", Anno[].class);
 		Stream <Anno> consumer = Stream.of(respuesta.getBody());
 
@@ -106,8 +106,8 @@ public class AnnoFXMLController implements Initializable{
 
 		Anno anno = new  Anno();
 		anno.setElAnno(Integer.parseInt(new_id_anno.getText()));
-		anno.setInicioAnno(new_f_init.getValue());
-		anno.setFinAnno(new_f_end.getValue());
+		anno.setInicioAnno(new_f_init.getValue().plusDays(1));
+		anno.setFinAnno(new_f_end.getValue().plusDays(1));
 		anno.setCerrado(cerradoNew.isSelected());
 
 
@@ -148,7 +148,7 @@ public class AnnoFXMLController implements Initializable{
 
 			e.printStackTrace();
 		}
-
+ 
 	}
 
 	@FXML protected void borrarAnno(ActionEvent actionEvent) throws IOException {

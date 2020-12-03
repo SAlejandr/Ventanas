@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.dto.LogSucesoDTO;
 import com.example.demo.model.pojos.LogSuceso;
 import com.example.demo.model.pojos.Usuario;
+import com.google.common.collect.Sets;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,7 @@ public class LogSucesoFXMLController implements Initializable{
 
 	private static ObservableList<LogSucesoDTO> losLogSucesos = FXCollections.observableArrayList();
 
+	private HashSet<LogSuceso> logs = Sets.newHashSet();
 	private final String INIT_URL = "http://localhost:8080/pro/logSuceso";
 
 	private RestTemplate restTemplate = new RestTemplate();
@@ -44,40 +46,29 @@ public class LogSucesoFXMLController implements Initializable{
 		// TODO Auto-generated method stub
 
 		try {
+
 			System.out.println("·APENAS VOY A ENTRAR");
 			solicitarListaActualizada();
 
 			losLogSucesos.forEach(System.out::println);
-
-			/*ObservableList<LogSuceso> losLogSucesos1 = FXCollections.observableArrayList();
-
-			for(int i =0; i< losLogSucesos.size(); i++) {
-				LogSuceso aux1 = losLogSucesos.get(i);
-
-				LocalDateTime ingreso = aux1.getInstanteDeAcceso();
-				LocalDateTime salida = aux1.getInstanteDeSalida();
-				Long consecutivo = aux1.getConsecutivo();
-				Integer idUsuario = aux1.getUsuario().getId(); 
-
-				LogSuceso aux = 
-			}*/
-
-
+			
+		
+			
 			//AQUI TENDRIA QUE CREAR UNA OBSERVABLE LIST CON SOLO DATOS SIMPLES
-			TableColumn<LogSucesoDTO, Long> columna1 = new TableColumn<>("Consecutivo");
-			TableColumn<LogSucesoDTO, Integer> columna2 = new TableColumn<>("ID Usuario");
+			TableColumn<LogSucesoDTO, Long> columna1 = new TableColumn<>("Nº");
+			TableColumn<LogSucesoDTO, Integer> columna2 = new TableColumn<>("ID");
 			TableColumn<LogSucesoDTO, String> columna3 = new TableColumn<>("Usuario");
-			TableColumn<LogSucesoDTO, Integer> columna4 = new TableColumn<>("ID Tabla");
-			TableColumn<LogSucesoDTO, String> columna5 = new TableColumn<>("Tabla");
-			TableColumn<LogSucesoDTO, LocalDateTime> columna6 = new TableColumn<>("Fecha-Hora");
+			TableColumn<LogSucesoDTO, String> columna4 = new TableColumn<>("Tabla");
+			TableColumn<LogSucesoDTO, String> columna5 = new TableColumn<>("Suceso");
+			TableColumn<LogSucesoDTO, LocalDateTime> columna6 = new TableColumn<>("Día y Hora");
 
 			columna1.setCellValueFactory(new PropertyValueFactory<>("consecutivo"));
 			columna2.setCellValueFactory(new PropertyValueFactory<>("idUsuario"));
 			columna3.setCellValueFactory(new PropertyValueFactory<>("nombreUsuario"));
-			columna4.setCellValueFactory(new PropertyValueFactory<>("idTabla"));
-			columna5.setCellValueFactory(new PropertyValueFactory<>("nombre"));			
-			columna5.setCellValueFactory(new PropertyValueFactory<>("instante"));
-
+			columna4.setCellValueFactory(new PropertyValueFactory<>("tabla"));
+			columna5.setCellValueFactory(new PropertyValueFactory<>("suceso"));
+			columna6.setCellValueFactory(new PropertyValueFactory<>("instante"));
+			
 			System.out.println("MIS LOGSUCESOS : " + losLogSucesos.toString());
 
 			logSucesoTabla.setItems(losLogSucesos);
@@ -91,19 +82,22 @@ public class LogSucesoFXMLController implements Initializable{
 	}
 
 	private void solicitarListaActualizada() {
+		losLogSucesos.clear();
 
 		ResponseEntity<LogSuceso[]> respuesta = restTemplate.getForEntity(INIT_URL + "/get/all", LogSuceso[].class);
 		Stream <LogSuceso> consumer = Stream.of(respuesta.getBody());
 
-		consumer.forEach(log -> losLogSucesos.add(new LogSucesoDTO(log)));
-
+			System.out.println("Entro");
+		consumer.forEach(log -> {logs.add(log);
+			System.err.println("//"+log.toString());
+			});
+		logs.stream().forEach(log -> losLogSucesos.add(new LogSucesoDTO(log)));
 	}
 
 
 
 	@FXML protected void refrescarLista(ActionEvent actionEvent) {
 
-		losLogSucesos.clear();
 
 		solicitarListaActualizada();
 	}

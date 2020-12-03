@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -66,7 +65,8 @@ public class MesesFXMLController implements Initializable{
 	@FXML private ComboBox<EstadosDeMes> upd_estado;
 
 
-	private HashMap<String, Mes> mapMeses = Maps.newHashMap();
+	private HashMap<String, Mes> mapMesesDelete = Maps.newHashMap();
+	private HashMap<MesFiscalId, Mes> mapMeses = Maps.newHashMap();
 	private static ObservableList<MesDTO> mesesDTO = FXCollections.observableArrayList();
 	
 	private HashSet<Anno> annos = Sets.newHashSet();
@@ -122,7 +122,9 @@ public class MesesFXMLController implements Initializable{
 		Stream <Mes> consumer = Stream.of(respuesta.getBody());
 
 		consumer.forEach(mes  ->{  
-			mapMeses.put(mes.getNombre(), mes);
+			mapMeses.put(mes.getIdFiscal(), mes);
+			mapMesesDelete.put(mes.getNombre(), mes);
+			System.out.println(mes.toString());
 			mesesDTO.add(new MesDTO(mes));
 			
 		});
@@ -153,11 +155,7 @@ public class MesesFXMLController implements Initializable{
 				fin(new_f_end.getValue()).
 				estado(new_estado.getValue()).
 				build();
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM");
-		LocalDate ld = LocalDate.of(2020,mes.getIdFiscal().getMes(), 1);
-		
-		mes.setNombre(dtf.format(ld)+"-"+mes.getIdFiscal().getAnno().getElAnno());
+		mes.setNombre(mes.getIdFiscal().getMes()+"-"+mes.getIdFiscal().getAnno().getElAnno());
 		try {
 
 			restTemplate.postForObject(INIT_URL + "/add", mes, Mes.class);
@@ -178,15 +176,15 @@ public class MesesFXMLController implements Initializable{
 		Mes mes = Mes.builder().
 				idFiscal(MesFiscalId.builder().
 						anno(Anno.builder().
-								elAnno(new_anno.getValue()).
+								elAnno(upd_anno.getValue()).
 								build()
 								).
 						mes(Integer.parseInt(upd_id.getText())).
 						build()
 						).
-				inicio(new_f_init.getValue()).
-				fin(new_f_end.getValue()).
-				estado(new_estado.getValue()).
+				inicio(upd_f_init.getValue()).
+				fin(upd_f_end.getValue()).
+				estado(upd_estado.getValue()).
 				build();
 		
 			mes.setNombre(mes.getIdFiscal().getMes()+"-"+mes.getIdFiscal().getAnno().getElAnno());
@@ -208,16 +206,17 @@ public class MesesFXMLController implements Initializable{
 
 	@FXML public void borrar()  throws IOException {
 
-		System.out.println("Borrar Anno");
+		System.out.println("Borrar Mes");
 
-		boolean confirmado = ConfirmBox.display("Borrar anno", "¿Esta seguro que desea borrar el registro?",
+		boolean confirmado = ConfirmBox.display("Borrar Mes", "¿Esta seguro que desea borrar el registro?",
 				getClass().getResource("/templates/Estilos/ConfirmBoxStyle.css").toExternalForm());
 
 		if (confirmado) {
 			try {
-				String id =  tablaMeses.getSelectionModel().getSelectedItem().getNombreMes();
+
+				String id = tablaMeses.getSelectionModel().getSelectedItem().getNombreMes();
 				
-				Mes mes = mapMeses.get(id);
+				Mes mes = mapMesesDelete.get(id);
 				
 				restTemplate.delete(INIT_URL+"/delete", mes.getIdFiscal());
 
@@ -239,8 +238,15 @@ public class MesesFXMLController implements Initializable{
 	}
 
 	@FXML public void cargar() {
-		
-		String id = upd_id.getText()+"-"+upd_anno.getValue();
+
+
+		MesFiscalId id = MesFiscalId.builder().
+				anno(Anno.builder().
+						elAnno(upd_anno.getValue()).
+						build()
+				).
+				mes(Integer.parseInt(upd_id.getText())).
+				build();
 		
 		Mes mes = mapMeses.get(id);
 		

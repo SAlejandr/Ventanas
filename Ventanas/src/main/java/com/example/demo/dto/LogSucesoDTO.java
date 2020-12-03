@@ -20,8 +20,8 @@ public class LogSucesoDTO {
 	private long consecutivo;
 	private int idUsuario;
 	private String nombreUsuario;
-	private int idTabla;
-	private String nombreTabla;
+	private String tabla;
+	private String suceso;
 	private LocalDateTime instante;
 	
 	public LogSucesoDTO(LogSuceso log) {
@@ -29,8 +29,8 @@ public class LogSucesoDTO {
 		this.setConsecutivo(log.getConsecutivo());
 		this.setIdUsuario(log.getUsuario().getId());
 		this.setNombreUsuario(log.getUsuario().getUsername()+"-"+log.getUsuario().getNombre());
-		this.setIdTabla(log.getTabla().getTablaId());
-		this.setNombreTabla(log.getTabla().getNombreTabla());
+		this.setTabla(log.getTabla().getTablaId()+"-"+log.getTabla().getNombreTabla());
+		this.setSuceso(log.getSuceso().getCodSuceso()+"-"+log.getSuceso().getNomSuceso());
 		this.setInstante(log.getInstante());
 	}
 }

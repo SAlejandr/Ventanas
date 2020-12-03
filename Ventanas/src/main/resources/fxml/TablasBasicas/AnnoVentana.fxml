@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -19,14 +20,22 @@
                <content>
                   <AnchorPane prefHeight="285.0" prefWidth="590.0">
                      <children>
-                              <TableView fx:id="tablaAnno" layoutX="14.0" layoutY="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="349.0" />
+                        <ScrollPane layoutX="14.0" layoutY="55.0" prefHeight="200.0" prefWidth="329.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="328.0">
+                                 <children>
+                                          <TableView fx:id="tablaAnno" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="349.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
                         <Button layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onAction="#refrescarLista" text="Refrescar" />
                         <Button layoutX="125.0" layoutY="14.0" mnemonicParsing="false" onAction="#borrarAnno" text="Borrar" />
                      </children>
                   </AnchorPane>
                </content>
 				</Tab>
-				<Tab  text="Crear nuevo">
+				<Tab text="Crear nuevo">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="286.0" prefWidth="590.0">
 							<children>
@@ -46,7 +55,7 @@
 					<content>
 						<AnchorPane fx:id="idCerradoUpd" minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="215.0">
 							<children>
-								<Button layoutX="42.0" layoutY="229.0" mnemonicParsing="false" onAction="#modificarAnno" text="Guardar" />
+								<Button layoutX="38.0" layoutY="223.0" mnemonicParsing="false" onAction="#modificarAnno" text="Guardar" />
 								<TextField fx:id="upd_id_anno" layoutX="155.0" layoutY="34.0" />
 								<Label layoutX="55.0" layoutY="38.0" text="Año:" />
 								<Label layoutX="26.0" layoutY="98.0" text="Fecha de Inicio:" />

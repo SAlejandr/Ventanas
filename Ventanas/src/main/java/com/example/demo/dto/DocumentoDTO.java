@@ -19,8 +19,6 @@ public class DocumentoDTO {
 	
 	@Include
 	private String tipoDocumento;
-	
-	private String tipoDoc;
 
 	private LocalDate fecha;
 
@@ -33,13 +31,12 @@ public class DocumentoDTO {
 
 	public DocumentoDTO(Documento documento) {
 		
-		numDocumento = documento.getIdDocumento().getNumDocumento();
 		tipoDocumento = documento.getIdDocumento().getTipoDocumento().getTipoDoc();
-		tipoDoc = documento.getIdDocumento().getTipoDocumento().getNombreDocumento();
+		numDocumento = documento.getIdDocumento().getNumDocumento();
 		fecha = documento.getFecha();
+		concepto = documento.getConcepto();
 		responsable = documento.getResponsable().getNombre();
 		valorTotal = documento.getValorTotal();
-		concepto = documento.getConcepto();
 		
 	}
 	

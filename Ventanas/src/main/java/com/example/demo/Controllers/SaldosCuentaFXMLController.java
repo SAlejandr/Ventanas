@@ -50,9 +50,9 @@ public class SaldosCuentaFXMLController implements Initializable{
 			
 
 			
-			TableColumn<SaldoCuentaDTO, String> columna1 = new TableColumn<>("Cuenta");
-			TableColumn<SaldoCuentaDTO, Integer> columna2 = new TableColumn<>("Año");
-			TableColumn<SaldoCuentaDTO, String> columna3 = new TableColumn<>("Mes");
+			TableColumn<SaldoCuentaDTO, String> columna1 = new TableColumn<>("Año");
+			TableColumn<SaldoCuentaDTO, Integer> columna2 = new TableColumn<>("Mes");
+			TableColumn<SaldoCuentaDTO, String> columna3 = new TableColumn<>("Cuenta");
 			TableColumn<SaldoCuentaDTO, BigDecimal> columna4 = new TableColumn<>("Mvto_Debito");
 			TableColumn<SaldoCuentaDTO, BigDecimal> columna5 = new TableColumn<>("Mvto_Credito");
 			TableColumn<SaldoCuentaDTO, BigDecimal> columna6 = new TableColumn<>("Total_Debito");

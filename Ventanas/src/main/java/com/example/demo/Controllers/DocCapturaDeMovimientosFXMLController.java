@@ -383,7 +383,7 @@ public class DocCapturaDeMovimientosFXMLController implements Initializable{
 		movimientoDTO = dto;
 
 		elConcepto.setText(dto.getConcepto());
-		elCCostos.setValue(dto.getCcostos());
+		elCCostos.setValue(""+dto.getCcostos());
 		elTercero.setValue(dto.getTercero());
 		elCredito.setText(dto.getCredito()+"");
 		elDebito.setText(dto.getDebito()+"");

@@ -33,14 +33,14 @@ public class CuentaFXMLController implements Initializable{
 	@FXML TableView<CuentaDTO> tabla;
 
 	@FXML TextField new_codCuenta;
-	@FXML ComboBox<String> new_cuentaS;
+	@FXML ComboBox new_cuentaS;
 	@FXML CheckBox new_hasTercero;
 	@FXML CheckBox new_hasCCostos;
 	@FXML CheckBox new_hasMovimientos;
 	@FXML TextField new_nombre;
 	@FXML ComboBox<ConfiguracionCuentas> new_config;
 
-	@FXML ComboBox<String> upd_cuentaS;
+	@FXML ComboBox upd_cuentaS;
 	@FXML TextField upd_codCuenta;
 	@FXML CheckBox upd_hasTercero;
 	@FXML CheckBox upd_hasCCostos;
@@ -71,7 +71,7 @@ public class CuentaFXMLController implements Initializable{
 
 		TableColumn<CuentaDTO, String> columna1 = new TableColumn<>("Cod.Cuenta");
 		TableColumn<CuentaDTO, String> columna2 = new TableColumn<>("Nombre");
-		TableColumn<CuentaDTO, Integer> columna3 = new TableColumn<>("Cuenta superior");
+		TableColumn<CuentaDTO, String> columna3 = new TableColumn<>("Cuenta superior");
 		TableColumn<CuentaDTO, String> columna4 = new TableColumn<>("Configuracion cuenta");
 		TableColumn<CuentaDTO, Boolean> columna5 = new TableColumn<>("Tercero");
 		TableColumn<CuentaDTO, Boolean> columna6 = new TableColumn<>("Centro de costos");
@@ -89,7 +89,8 @@ public class CuentaFXMLController implements Initializable{
 		tabla.setItems(cuentasDTO);
 
 		new_config.setItems(configuraciones);
-		new_cuentaS.setItems(codCuentas);
+		upd_config.setItems(configuraciones);
+		new_cuentaS.setItems(codCuentas); 
 		upd_cuentaS.setItems(codCuentas);
 
 	}
@@ -121,13 +122,13 @@ public class CuentaFXMLController implements Initializable{
 
 	@FXML public void crear() throws IOException {
 
-		String codCuenta = new_codCuenta.getText();
+		String in = new_codCuenta.getText();
 
-		if(!cuentas.containsKey(codCuenta)) {
+		if(!cuentas.containsKey(in)) {
 
 			Cuenta c = Cuenta.builder().
-					codCuenta(codCuenta).
-					cuentaSuperior(new_cuentaS.getValue()).
+					codCuenta(in).
+					cuentaSuperior(cuentas.get(new_cuentaS.getSelectionModel().getSelectedItem()).getCodCuenta()).			//PROBAR SI QUEDA BIEN
 					nombre(new_nombre.getText()).
 					claseCuenta(new_config.getSelectionModel().getSelectedItem()).
 					ccostos(new_hasCCostos.isSelected()).
@@ -138,8 +139,8 @@ public class CuentaFXMLController implements Initializable{
 			try {
 				restTemplate.postForEntity(INIT_URL+"/cuentas/add", c, Cuenta.class);
 				
-				codCuentas.add(codCuenta);
-				cuentas.put(codCuenta, c);
+				codCuentas.add(in);
+				cuentas.put(in, c);
 			}catch (HttpClientErrorException e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -153,13 +154,13 @@ public class CuentaFXMLController implements Initializable{
 
 	@FXML public void actualizar() throws IOException {
 
-		String codCuenta = upd_codCuenta.getText();
+		String in = upd_codCuenta.getText();
 
-		if(cuentas.containsKey(codCuenta)) {
+		if(cuentas.containsKey(in)) {
 
 			Cuenta c = Cuenta.builder().
-					codCuenta(codCuenta).
-					cuentaSuperior(upd_cuentaS.getSelectionModel().getSelectedItem()).
+					codCuenta(in).
+					cuentaSuperior(cuentas.get(upd_cuentaS.getSelectionModel().getSelectedItem()).getCodCuenta()).
 					nombre(upd_nombre.getText()).
 					claseCuenta(upd_config.getSelectionModel().getSelectedItem()).
 					ccostos(upd_hasCCostos.isSelected()).
@@ -205,7 +206,7 @@ public class CuentaFXMLController implements Initializable{
 
 		CuentaDTO dto = tabla.getSelectionModel().getSelectedItem();
 
-		Map<String, String> params = new TreeMap<>();
+		Map<String, String> params = new TreeMap<String, String>();
 		params.put("id", dto.getCodCuenta());
 
 		restTemplate.delete(INIT_URL+"/cuenta/delete?id={id}", params);

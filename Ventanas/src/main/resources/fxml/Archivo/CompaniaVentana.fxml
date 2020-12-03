@@ -14,37 +14,37 @@
             <HBox prefHeight="35.0" prefWidth="532.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="110.0" text="ID" />
-                  <TextField fx:id="idText" />
+                  <TextField fx:id="idText" editable="false" />
                   <Separator prefHeight="1.0" prefWidth="66.0" visible="false" />
                   <Label prefHeight="17.0" prefWidth="42.0" text="Tipo Id" />
-                  <TextField fx:id="tipoIdText" />
+                  <TextField fx:id="tipoIdText" editable="false" />
                </children>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="532.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="110.0" text="Nombre" />
-                  <TextField fx:id="nombreText" prefHeight="25.0" prefWidth="407.0" />
+                  <TextField fx:id="nombreText" editable="false" prefHeight="25.0" prefWidth="407.0" />
                </children>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="532.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="110.0" text="Dirección" />
-                  <TextField fx:id="direccionText" prefHeight="25.0" prefWidth="407.0" />
+                  <TextField fx:id="direccionText" editable="false" prefHeight="25.0" prefWidth="407.0" />
                </children>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="532.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="110.0" text="Ciudad" />
-                  <TextField fx:id="ciudadText" prefHeight="25.0" prefWidth="407.0" />
+                  <TextField fx:id="ciudadText" editable="false" prefHeight="25.0" prefWidth="407.0" />
                </children>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="532.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="110.0" text="Móvil" />
-                  <TextField fx:id="movilText" />
+                  <TextField fx:id="movilText" editable="false" />
                   <Separator prefHeight="0.0" prefWidth="67.0" visible="false" />
                   <Label prefHeight="17.0" prefWidth="44.0" text="Fijo" />
-                  <TextField fx:id="fijoText" />
+                  <TextField fx:id="fijoText" editable="false" />
                </children>
             </HBox>
             <HBox prefHeight="35.0" prefWidth="532.0">

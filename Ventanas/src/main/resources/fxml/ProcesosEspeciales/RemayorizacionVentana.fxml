@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.RemayorizacionFXMLController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea fx:id="mensajeArea" editable="false" layoutX="42.0" layoutY="27.0" prefHeight="137.0" prefWidth="555.0" text="El proceso de remayorización se encarga de calcular los saldos&#10;para las cuentas de movimiento y las cuentas mayores.  Para &#10; asegurar su exactitud, deben ejecutarse los procesos de auditoría&#10;previamente y realizar las correcciones a que haya lugar. &#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+            <Button fx:id="remayorizarBoton" layoutX="279.0" layoutY="345.0" mnemonicParsing="false" onAction="#onGenerarClicked" text="Remayorizar" />
+            <TextField fx:id="mesInicialText" layoutX="151.0" layoutY="247.0" />
+            <TextField fx:id="mesFinalText" layoutX="151.0" layoutY="289.0" />
+            <Label layoutX="74.0" layoutY="251.0" text="Mes Inicial" />
+            <Label layoutX="75.0" layoutY="293.0" text="Mes Finall" />
+            <Label layoutX="75.0" layoutY="210.0" text="Año" />
+            <TextField fx:id="annoText" layoutX="151.0" layoutY="206.0" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

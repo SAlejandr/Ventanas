@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.BalancePruebaFXMLController">
+   <children>
+      <ComboBox fx:id="mesesCombo" disable="true" layoutX="206.0" layoutY="32.0" onAction="#onMesesComboChanged" prefWidth="150.0" promptText="Seleccione Mes" />
+      <Button fx:id="generarReporteBoton" disable="true" layoutX="405.0" layoutY="32.0" mnemonicParsing="false" onAction="#onGenerarReporteBotonClicked" text="Guardar" />
+      <ComboBox fx:id="annosCombo" layoutX="36.0" layoutY="32.0" onAction="#onAnnosComboChanged" prefWidth="150.0" promptText="Seleccione Año" />
+      <AnchorPane fx:id="reporteAnchor" layoutX="36.0" layoutY="75.0" prefHeight="312.0" prefWidth="580.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+   </children>
+</AnchorPane>

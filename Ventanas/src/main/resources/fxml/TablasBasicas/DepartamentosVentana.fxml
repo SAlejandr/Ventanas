@@ -14,15 +14,15 @@
    <children>
       <AnchorPane prefHeight="322.0" prefWidth="485.0">
          <children>
-            <TabPane prefHeight="322.0" prefWidth="485.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane prefHeight="348.0" prefWidth="486.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Ver datos">
                      <content>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <AnchorPane>
                            <children>
-                              <ScrollPane fitToWidth="true" layoutX="16.0" layoutY="55.0" prefHeight="461.0" prefWidth="453.0">
+                              <ScrollPane fitToWidth="true" layoutX="16.0" layoutY="57.0" prefHeight="250.0" prefWidth="454.0">
                                  <content>
-                                    <TableView fx:id="tabla" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-pref-width: 100%;" />
+                                    <TableView fx:id="tabla" prefHeight="250.0" prefWidth="453.0" style="-fx-pref-width: 100%;" />
                                  </content>
                               </ScrollPane>
                               <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refrescarLista" text="Refrescar" />
@@ -34,8 +34,8 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="new_id" layoutX="174.0" layoutY="22.0" prefHeight="25.0" prefWidth="95.0" />
-                              <TextField fx:id="new_name" layoutX="174.0" layoutY="59.0" prefHeight="25.0" prefWidth="76.0" />
+                              <TextField fx:id="new_id" layoutX="174.0" layoutY="22.0" prefHeight="26.0" prefWidth="50.0" />
+                              <TextField fx:id="new_name" layoutX="174.0" layoutY="59.0" prefHeight="26.0" prefWidth="234.0" />
                               <Label layoutX="31.0" layoutY="27.0" text="Cod. Departamento" />
                               <Label layoutX="31.0" layoutY="64.0" text="Nombre" />
                               <Button layoutX="158.0" layoutY="132.0" mnemonicParsing="false" onAction="#generar" text="Guardar" />
@@ -46,8 +46,8 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="upd_id" layoutX="174.0" layoutY="22.0" prefHeight="25.0" prefWidth="95.0" />
-                              <TextField fx:id="upd_name" layoutX="174.0" layoutY="59.0" prefHeight="25.0" prefWidth="76.0" />
+                              <TextField fx:id="upd_id" layoutX="174.0" layoutY="22.0" prefHeight="26.0" prefWidth="50.0" />
+                              <TextField fx:id="upd_name" layoutX="174.0" layoutY="59.0" prefHeight="25.0" prefWidth="234.0" />
                               <Label layoutX="31.0" layoutY="27.0" text="Cod. Departamento" />
                               <Label layoutX="31.0" layoutY="64.0" text="Nombre" />
                               <Button layoutX="70.0" layoutY="132.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
